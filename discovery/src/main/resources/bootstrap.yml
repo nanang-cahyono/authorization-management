@@ -1,0 +1,52 @@
+server:
+  port: 8761
+
+info:
+  component: Discovery Server
+
+endpoints:
+  refresh:
+    enabled: true
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: false
+
+spring:
+  application:
+    name: discovery
+  aop:
+    proxy-target-class: true
+  cloud:
+    inetutils:
+      preferred-networks:
+      - 10.0.0
+      timeout-seconds: 90
+
+eureka:
+  instance:
+    hostname: discovery  
+    
+---
+spring:
+  profiles: peer1
+
+eureka:
+  instance:
+    hostname: discovery1
+  client:
+    serviceUrl:
+      defaultZone: http://discovery2:8761/discovery/     
+      
+---
+spring:
+  profiles: peer2
+
+eureka:
+  instance:
+    hostname: discovery2
+  client:
+    serviceUrl:
+      defaultZone: http://discovery1:8761/discovery/  

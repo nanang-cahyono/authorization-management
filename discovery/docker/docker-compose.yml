@@ -1,0 +1,48 @@
+version: "3.3"
+services:
+  service-eureka1:    
+    container_name: discovery-1
+    build:
+      context: .
+      dockerfile: dockerFile
+    image: ${REGISTRY_SERVER}/satpam/discovery:1.0.0-SNAPSHOT
+    environment:
+        SPRING_PROFILES_ACTIVE: peer1
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "8761:8761"
+    networks:
+      default:
+        aliases:
+          - discovery
+          - discovery1
+    hostname: discovery1
+    
+  service-eureka2:    
+    container_name: discovery-2
+    build:
+      context: .
+      dockerfile: dockerFile
+    image: ${REGISTRY_SERVER}/satpam/discovery:1.0.0-SNAPSHOT
+    environment:
+        SPRING_PROFILES_ACTIVE: peer2
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "8762:8761"
+    networks:
+      default:
+        aliases:
+          - discovery
+          - discovery2
+    hostname: discovery2
+
+networks:
+  default:
+    external:
+      name: satpam-net

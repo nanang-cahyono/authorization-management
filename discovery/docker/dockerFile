@@ -1,0 +1,3 @@
+FROM frolvlad/alpine-oraclejdk8:slim
+COPY app.war /apps/
+CMD java -jar /apps/app.war
