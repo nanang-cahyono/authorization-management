@@ -1,6 +1,7 @@
 version: "3.3"
 services:
   discovery1:       
+    container_name: discovery1
     build:
       context: .
       dockerfile: dockerFile
@@ -21,6 +22,7 @@ services:
     hostname: discovery1
     
   discovery2:        
+    container_name: discovery2
     build:
       context: .
       dockerfile: dockerFile
